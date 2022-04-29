@@ -8,18 +8,21 @@ public class AgendaFuncionando {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		ArrayList<String> array = new ArrayList();
+		ArrayList<String> AgendaFav = new ArrayList();
+		ArrayList<String> historico = new ArrayList();
+		historico.add(null);
 
 		AgendaSistema agenda = new AgendaSistema();
 		ContatoSistema contt = new ContatoSistema();
-		Lista favorito = new Lista();
+		ContatoSistema favorito = new ContatoSistema();
 
-		String resp = "s";
+		String resp;
 		String dados,RespFav;
-		int ddd, n = 0;
+		boolean laco=true;
+		int ddd;
 
-		Lista[] AgendaFav = new Lista[n+1];
 
-		while (resp.equalsIgnoreCase("s")) {
+		while (laco==true) {
 
 			System.out.print("Nome: ");
 			dados = sc.nextLine();
@@ -37,77 +40,83 @@ public class AgendaFuncionando {
 			dados = sc.next();
 			contt.setTipo(dados);
 
-			System.out.println("Acrescentar outro número? [s]/[n]");
-			dados = sc.next();
-			while (dados.equalsIgnoreCase("s")) {
-				System.out.print("DDD: ");
-				ddd = sc.nextInt();
-				contt.setDigito(ddd);
-
-				System.out.print("Número: ");
-				dados = sc.next();
-				contt.setNumero(dados);
-
-				System.out.print("Tipo(Celular, Residencial, etc): ");
-				dados = sc.next();
-				contt.setTipo(dados);
-
-				System.out.println("Acrescentar outro número? [s]/[n]");
-				resp = sc.next();
-			}
-
-			System.out.println("E-mail: ");
+			System.out.print("E-mail: ");
 			dados = sc.next();
 			contt.setEmail(dados);
 
-			System.out.println("Adicionar aos favoritos? [s]/[n]");
+			System.out.print("Adicionar aos favoritos? [s]/[n] ");
 			RespFav = sc.next();
 			if (RespFav.equalsIgnoreCase("s")) {
 				contt.setFavorito(true);
 
-				favorito.setFavoritos(contt.getNome());
-				AgendaFav = new Lista[n+1];
-				AgendaFav[n] = favorito;
-				n++;
+				favorito.setListaFav(contt.getNome());
+				AgendaFav.add(favorito.getListaFav());
 
 			} else {
 				contt.setFavorito(false);
+				AgendaFav.add(null);
 			}
 
 			agenda.setContatos(contt);
 
 			array.add(agenda.getContatos());
 
-			System.out.println("Deseja acrecentar mais um contato? [s]/[n]");
+			
+			System.out.print("Deseja acrecentar mais um contato? [s]/[n] ");
 			resp = sc.next();
+			if(resp.equalsIgnoreCase("n")) {
+				laco=false;
+			}
+			
 			System.out.println("");
+			sc.nextLine();
 		}
 
 		// System.out.println(agenda.getContatos());
 
 		/*
-		 * for(int i=0;i<array.size();i++) { System.out.println(array.get(i)); }
-		 */
+		  for(int i=0;i<array.size();i++) { 
+		  		System.out.println(array.get(i)); 
+		  }*/
 
-		System.out.println("Deseja ver sua lista de contatos? [s]/[n]");
+		System.out.print("Deseja ver sua lista de contatos? [s]/[n] ");
 		resp = sc.next();
 		if (resp.equalsIgnoreCase("s")) {
 			for (String arrays : array) {
 				System.out.println(arrays);
-				System.out.println("=======");
+				System.out.println("=======\n");
 			}
+			
 		} else {
-			System.out.println("Ok, então.");
+			System.out.println("Ok, então.\n");
 		}
 
-		System.out.println("Deseja ver os favoritos? [s]/[n]");
+		System.out.print("Deseja ver os favoritos? [s]/[n ");
 		resp = sc.next();
 		if (resp.equalsIgnoreCase("s")) {
-			for (int i = 0; i < AgendaFav.length; i++) {
-				System.out.println(AgendaFav[i]);
+			if(AgendaFav.contains(null)) {
+				System.out.println("Não há favoritos.\n");
+			}else {
+				for(String agendas: AgendaFav) {
+					System.out.println(agendas);
+				}					
 			}
-		} else {
-			System.out.println("Ok, então.");
+			
+		}else {
+			System.out.println("Ok, então.\n");
+		}
+		
+		System.out.print("Deseja ver seu histórico de chamadas? [s]/[n] ");
+		resp=sc.next();
+		if(resp.equalsIgnoreCase("s")) {
+			if(historico.contains(null)) {
+				System.out.println("Nenhuma chamada.");
+			}else {
+				for(String historicos: historico) {
+					System.out.println(historicos);
+				}
+			}
+			
 		}
 
 		sc.close();

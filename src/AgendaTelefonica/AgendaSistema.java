@@ -2,8 +2,7 @@ package AgendaTelefonica;
 
 public class AgendaSistema {
 	private ContatoSistema contatos;
-	private Lista historico;
-	private String[] favoritos;
+	private ContatoSistema favoritos;
 	
 	
 	public String getContatos() {
@@ -13,17 +12,10 @@ public class AgendaSistema {
 		this.contatos = contatos;
 	}
 	
-	public Lista getHistorico() {
-		return historico;
-	}
-	public void setHistorico(Lista historico) {
-		this.historico = historico;
-	}
-	
-	public String[] getFavoritos() {
+	public ContatoSistema getFavoritos() {
 		return favoritos;
 	}
-	public void setFavoritos(String[] favoritos) {
+	public void setFavoritos(ContatoSistema favoritos) {
 		this.favoritos = favoritos;
 	}
 	
